@@ -32,7 +32,7 @@ const Gallery = () => {
     };
   }, []);
   return (
-    <section className="flex flex-col justify-center items-center">
+    <section className="flex flex-col justify-center items-center mt-64">
       <div className="flex flex-row gap-10">
         <img src="/img/pfp-g0d.png" alt="@g0.d_usopp.ps" />
         <div>

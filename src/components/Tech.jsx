@@ -3,8 +3,8 @@ import Marquee from 'react-fast-marquee'
 
 const Tech = () => {
   return (
-    <section>
-      <h1 className='text-white text-[96px] font-bold mt-64' style={{ fontFamily: "Sora Variable" }}>
+    <section className='mt-64'>
+      <h1 className='text-white text-[96px] font-bold mb-24 ml-16' style={{ fontFamily: "Sora Variable" }}>
         Tech Stack
       </h1>
       <div className='flex gap-20 flex-col'>
