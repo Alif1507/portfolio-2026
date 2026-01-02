@@ -6,6 +6,8 @@ import Gallery from './components/Gallery'
 import Tech from './components/Tech'
 import Projects from './components/Projects'
 import Pencapaian from './components/Pencapaian'
+import Together from './components/Together'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
@@ -17,6 +19,8 @@ const App = () => {
       <Projects />
       <Pencapaian />
       <Gallery />
+      <Together />
+      <Footer />
     </main>
   )
 }
