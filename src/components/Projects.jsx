@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import axios from "axios";
+import TiltedCard from "./assets/TiltedCard";
 
 const Projects = () => {
   const cardRefs = useRef([]);
@@ -8,7 +9,7 @@ const Projects = () => {
   const [project, setProject] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  
   useEffect(() => {
     let isMounted = true;
 
@@ -17,10 +18,26 @@ const Projects = () => {
         setLoading(true);
         setError("");
 
-        const res = axios.get(
-          "https://github.com/Alif1507/projects/blob/main/Projects/projects.json"
+        const res = await axios.get(
+          "https://projects-sooty-chi.vercel.app/Projects/projects.json"
         );
-        if (isMounted) setProject(res.data);
+
+        const data = res.data;
+        const normalized = Array.isArray(data)
+          ? data
+          : Array.isArray(data?.projects)
+          ? data.projects
+          : Array.isArray(data?.Projects)
+          ? data.Projects
+          : [];
+
+        if (isMounted) {
+          if (normalized.length === 0) {
+            setError("Unexpected response format from projects API.");
+          } else {
+            setProject(normalized);
+          }
+        }
       } catch (err) {
         if (isMounted) {
           setError(
@@ -32,7 +49,7 @@ const Projects = () => {
       }
     }
 
-    ambilData()
+    ambilData();
 
     return () => {
       isMounted = false;
@@ -81,6 +98,7 @@ const Projects = () => {
   };
 
   
+  
   return (
     <section
       className="mt-64 text-white"
@@ -93,14 +111,24 @@ const Projects = () => {
         {project.map((d, index) => (
           <div
             key={d.id}
-            className="flex flex-col w-full overflow-hidden"
+            className="flex flex-col w-[600px] overflow-hidden"
             onMouseEnter={() => enter(index)}
             onMouseLeave={() => leave(index)}
           >
-            <img
-              src={`https://github.com/Alif1507/projects/blob/main/Projects/img/thubnail${d.id}.png?raw=true`}
-              alt="MAW PROJECTS"
-            />
+            <TiltedCard
+            imageSrc={`https://github.com/Alif1507/projects/blob/main/Projects/img/thubnail${d.id}.png?raw=true`}
+            altText="Kendrick Lamar - GNX Album Cover"
+            captionText={`${d.judul}`}
+            containerHeight="300px"
+            containerWidth="600px"
+            imageHeight="300px"
+            imageWidth="600px"
+            rotateAmplitude={12}
+            scaleOnHover={1}
+            showMobileWarning={false}
+            showTooltip={true}
+            displayOverlayContent={true}
+          />
             <div className="flex flex-row justify-between items-center font-extralight text-sm mt-2">
               <span>{d.tech}</span>
               <span>{d.category}</span>
