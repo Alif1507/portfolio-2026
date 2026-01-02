@@ -103,6 +103,7 @@ const Projects = () => {
     <section
       className="mt-64 text-white"
       style={{ fontFamily: "Sora Variable" }}
+      id="projects"
     >
       <h1 className="text-white text-[96px] font-bold mb-24 ml-16">
         My Projects

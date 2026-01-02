@@ -84,12 +84,16 @@ const Hero = () => {
           I’m a Web Developer, UI/UX Designer, and Photographer.
         </p>
         <div className="flex flex-row items-center justify-center mt-10 gap-10">
-          <img src="/img/github.png" className="h-[50px] w-[50px] hover:scale-105 transition-all cursor-pointer duration-300" alt="" />
+          <a href="https://github.com/Alif1507" target="_blank">
+            <img src="/img/github.png" className="h-[50px] w-[50px] hover:scale-105 transition-all cursor-pointer duration-300" alt="" />
+          </a>
           <button className="border-2 border-transparent
         bg-gradient-to-r from-[#280087] to-[#C00000]
         bg-clip-padding p-1 relative text-white rounded-full hover:scale-105 transition-all duration-300 cursor-pointer">
             <div className="bg-black text-white p-4 rounded-full">
-              Connect With Me
+              <a href="https://www.linkedin.com/in/muhammad-alif-wahyudi-06617b305/" target="_blank">
+                Connect With Me
+              </a>
             </div>
           </button>
         </div>

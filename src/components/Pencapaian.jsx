@@ -87,7 +87,7 @@ const Pencapaian = () => {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <section className="mt-64" style={{ fontFamily: "Sora Variable" }}>
+    <section className="mt-64" style={{ fontFamily: "Sora Variable" }} id="achievements">
       <h1 className="text-white text-[96px] font-bold mb-24 ml-16">
         My Achievements
       </h1>

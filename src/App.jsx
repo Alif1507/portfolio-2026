@@ -8,10 +8,12 @@ import Projects from './components/Projects'
 import Pencapaian from './components/Pencapaian'
 import Together from './components/Together'
 import Footer from './components/Footer'
+import Navbar from './components/Navbar'
 
 const App = () => {
   return (
     <main>
+      <Navbar />
       <Hero />
       <About />
       <Modern />
