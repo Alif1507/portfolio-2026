@@ -1,68 +1,68 @@
 import React from "react";
 import { gsap } from "gsap";
-// import { useGSAP } from "@gsap/react";
+import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
 import DarkVeil from "./assets/Darkveil";
 
 gsap.registerPlugin(SplitText);
 
 const Hero = () => {
-  // useGSAP(() => {
-  //   gsap.set("#nama", { overflow: "hidden" });
-  //   gsap.set([".hero-subtitle", ".hero-description", ".scroll-text", ".scroll-arrow"], {
-  //     opacity: 0,
-  //     y: 50
-  //   });
+  useGSAP(() => {
+    gsap.set("#nama", { overflow: "hidden" });
+    gsap.set([".hero-subtitle", ".hero-description", ".scroll-text", ".scroll-arrow"], {
+      opacity: 0,
+      y: 50
+    });
     
-  //   const heroText = new SplitText("#nama", { type: "chars,words" });
+    const heroText = new SplitText("#nama", { type: "chars,words" });
     
-  //   gsap.set(heroText.chars, { yPercent: 100, opacity: 0 });
+    gsap.set(heroText.chars, { yPercent: 100, opacity: 0 });
     
-  //   const tl = gsap.timeline();
+    const tl = gsap.timeline();
     
-  //   tl.to(".hero-subtitle", {
-  //     opacity: 1,
-  //     y: 0,
-  //     duration: 1.2,
-  //     delay: 10.9,
-  //     ease: "power3.out",
-  //   })
-  //   .to(".hero-description", {
-  //     opacity: 1,
-  //     y: 0,
-  //     duration: 1.2,
-  //     ease: "power3.out",
-  //   }, "-=0.8")
-  //   .to(heroText.chars, {
-  //     yPercent: 0,
-  //     opacity: 1,
-  //     duration: 1.8,
-  //     ease: "expo.out",
-  //     stagger: 0.05,
-  //   }, "-=0.5")
-  //   .to(".scroll-text", {
-  //     opacity: 1,
-  //     y: 0,
-  //     duration: 1,
-  //     ease: "power3.out",
-  //   }, "-=0.3")
-  //   .to(".scroll-arrow", {
-  //     opacity: 1,
-  //     y: 0,
-  //     duration: 1,
-  //     ease: "back.out(1.7)",
-  //   }, "-=0.5");
+    tl.to(".hero-subtitle", {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      delay: 10.9,
+      ease: "power3.out",
+    })
+    .to(".hero-description", {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      ease: "power3.out",
+    }, "-=0.8")
+    .to(heroText.chars, {
+      yPercent: 0,
+      opacity: 1,
+      duration: 1.8,
+      ease: "expo.out",
+      stagger: 0.05,
+    }, "-=0.5")
+    .to(".scroll-text", {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power3.out",
+    }, "-=0.3")
+    .to(".scroll-arrow", {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "back.out(1.7)",
+    }, "-=0.5");
     
-  //   gsap.to(".scroll-arrow", {
-  //     y: -10,
-  //     duration: 1.5,
-  //     ease: "power2.inOut",
-  //     yoyo: true,
-  //     repeat: -1,
-  //     delay: 3
-  //   });
+    gsap.to(".scroll-arrow", {
+      y: -10,
+      duration: 1.5,
+      ease: "power2.inOut",
+      yoyo: true,
+      repeat: -1,
+      delay: 3
+    });
     
-  // }, []);
+  }, []);
 
   return (
     <section id="home"

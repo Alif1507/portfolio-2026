@@ -267,6 +267,7 @@ export default function BubbleMenu({
                 ].join(' ')}
               >
                 <a
+                  target='_blank'
                   role="menuitem"
                   href={item.href}
                   aria-label={item.ariaLabel || item.label}

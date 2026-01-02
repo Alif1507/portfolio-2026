@@ -30,35 +30,35 @@ const Together = () => {
   const items = [
   {
     label: 'Instagram',
-    href: '#',
+    href: 'https://www.instagram.com/m._a_.w/',
     ariaLabel: 'Instagram',
     rotation: -8,
     hoverStyles: { bgColor: '#FF0069', textColor: '#ffffff' }
   },
   {
     label: 'Github',
-    href: '#',
+    href: 'https://github.com/Alif1507',
     ariaLabel: 'Github',
     rotation: 8,
     hoverStyles: { bgColor: '#181717', textColor: '#ffffff' }
   },
   {
     label: 'LinkedIn',
-    href: '#',
+    href: 'https://www.linkedin.com/in/muhammad-alif-wahyudi-06617b305/',
     ariaLabel: 'LinkedIn',
     rotation: 8,
     hoverStyles: { bgColor: '#264E70', textColor: '#ffffff' }
   },
   {
     label: 'TikTok',
-    href: '#',
+    href: 'https://www.tiktok.com/@alif2007_',
     ariaLabel: 'TikTok',
     rotation: 8,
     hoverStyles: { bgColor: '#000000', textColor: '#ffffff' }
   },
   {
     label: 'Upwork',
-    href: '#',
+    href: 'https://www.upwork.com/freelancers/mawfree',
     ariaLabel: 'upwork',
     rotation: -8,
     hoverStyles: { bgColor: '#6FDA44', textColor: '#ffffff' }

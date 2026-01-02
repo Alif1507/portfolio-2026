@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import axios from "axios";
 import TiltedCard from "./assets/TiltedCard";
@@ -9,7 +10,7 @@ const Projects = () => {
   const [project, setProject] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  
+
   useEffect(() => {
     let isMounted = true;
 
@@ -53,11 +54,13 @@ const Projects = () => {
 
     return () => {
       isMounted = false;
-    }
+    };
   }, []);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
+
+  const visibleProjects = project.slice(0, 4);
 
   const enter = (index) => {
     const card = cardRefs.current[index];
@@ -97,8 +100,6 @@ const Projects = () => {
     });
   };
 
-  
-  
   return (
     <section
       className="mt-64 text-white"
@@ -109,27 +110,27 @@ const Projects = () => {
         My Projects
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-14 mx-4 md:mx-16">
-        {project.map((d, index) => (
+        {visibleProjects.map((d, index) => (
           <div
-            key={d.id}
+            key={d.id ?? index}
             className="flex flex-col w-[600px] overflow-hidden"
             onMouseEnter={() => enter(index)}
             onMouseLeave={() => leave(index)}
           >
             <TiltedCard
-            imageSrc={`https://github.com/Alif1507/projects/blob/main/Projects/img/thubnail${d.id}.png?raw=true`}
-            altText="Kendrick Lamar - GNX Album Cover"
-            captionText={`${d.judul}`}
-            containerHeight="300px"
-            containerWidth="600px"
-            imageHeight="300px"
-            imageWidth="600px"
-            rotateAmplitude={12}
-            scaleOnHover={1}
-            showMobileWarning={false}
-            showTooltip={true}
-            displayOverlayContent={true}
-          />
+              imageSrc={`https://github.com/Alif1507/projects/blob/main/Projects/img/thubnail${d.id}.png?raw=true`}
+              altText="Kendrick Lamar - GNX Album Cover"
+              captionText={`${d.judul}`}
+              containerHeight="300px"
+              containerWidth="600px"
+              imageHeight="300px"
+              imageWidth="600px"
+              rotateAmplitude={12}
+              scaleOnHover={1}
+              showMobileWarning={false}
+              showTooltip={true}
+              displayOverlayContent={true}
+            />
             <div className="flex flex-row justify-between items-center font-extralight text-sm mt-2">
               <span>{d.tech}</span>
               <span>{d.category}</span>
@@ -152,16 +153,32 @@ const Projects = () => {
                   d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
                 />
               </svg>
-              <span
+              <a
+                href={d.link}
+                target="_blank"
+                className="hover:underline"
                 ref={(el) => {
                   cardRefs.current[index] = el;
                 }}
               >
                 {d.judul}
-              </span>
+              </a>
             </h1>
           </div>
         ))}
+      </div>
+      <div className="flex items-center justify-center w-screen">
+        <Link to="/projects">
+          <button
+            className="border-2 border-transparent mt-16
+        bg-gradient-to-r from-[#280087] to-[#C00000]
+        bg-clip-padding p-1 relative text-white rounded-full hover:scale-105 transition-all duration-300 cursor-pointer"
+          >
+            <div className="bg-black text-white p-4 rounded-full">
+              SEE ALL PROJECTS
+            </div>
+          </button>
+        </Link>
       </div>
     </section>
   );
