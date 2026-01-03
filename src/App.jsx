@@ -32,7 +32,7 @@ const HomePage = () => (
 
 const App = () => {
   return (
-    <main>
+    <main style={{ fontFamily: "Sora Variable" }}>
       <BrowserRouter>
         <ClickSpark
           sparkColor="#fff"

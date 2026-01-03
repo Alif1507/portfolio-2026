@@ -10,6 +10,9 @@ const Projects = () => {
   const [project, setProject] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const isTouchDevice =
+    typeof window !== "undefined" &&
+    window.matchMedia("(hover: none)").matches;
 
   useEffect(() => {
     let isMounted = true;
@@ -63,6 +66,7 @@ const Projects = () => {
   const visibleProjects = project.slice(0, 4);
 
   const enter = (index) => {
+    if (isTouchDevice) return;
     const card = cardRefs.current[index];
     const arrow = arrowRefs.current[index];
     if (!card || !arrow) return;
@@ -82,6 +86,7 @@ const Projects = () => {
   };
 
   const leave = (index) => {
+    if (isTouchDevice) return;
     const card = cardRefs.current[index];
     const arrow = arrowRefs.current[index];
     if (!card || !arrow) return;
@@ -102,18 +107,19 @@ const Projects = () => {
 
   return (
     <section
-      className="mt-64 text-white"
+      className="mt-32 md:mt-48 lg:mt-64 text-white px-4 md:px-8"
       style={{ fontFamily: "Sora Variable" }}
       id="projects"
     >
-      <h1 className="text-white text-[96px] font-bold mb-24 ml-16">
+      <div className="max-w-6xl mx-auto space-y-8 md:space-y-12">
+      <h1 className="text-white text-[46px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-bold">
         My Projects
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-14 mx-4 md:mx-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
         {visibleProjects.map((d, index) => (
           <div
             key={d.id ?? index}
-            className="flex flex-col w-[600px] overflow-hidden"
+            className="flex flex-col w-full overflow-hidden rounded-2xl  bg-black/40 backdrop-blur-sm p-4 md:p-6"
             onMouseEnter={() => enter(index)}
             onMouseLeave={() => leave(index)}
           >
@@ -121,21 +127,21 @@ const Projects = () => {
               imageSrc={`https://github.com/Alif1507/projects/blob/main/Projects/img/thubnail${d.id}.png?raw=true`}
               altText="Kendrick Lamar - GNX Album Cover"
               captionText={`${d.judul}`}
-              containerHeight="300px"
-              containerWidth="600px"
-              imageHeight="300px"
-              imageWidth="600px"
-              rotateAmplitude={12}
+              containerHeight="240px"
+              containerWidth="100%"
+              imageHeight="240px"
+              imageWidth="100%"
+              rotateAmplitude={10}
               scaleOnHover={1}
               showMobileWarning={false}
               showTooltip={true}
               displayOverlayContent={true}
             />
-            <div className="flex flex-row justify-between items-center font-extralight text-sm mt-2">
-              <span>{d.tech}</span>
-              <span>{d.category}</span>
+            <div className="flex flex-row justify-between items-center font-extralight text-xs md:text-sm mt-4">
+              <span className="text-gray-300">{d.tech}</span>
+              <span className="text-gray-300">{d.category}</span>
             </div>
-            <h1 className="text-5xl font-bold mt-5 flex items-center">
+            <h1 className="text-3xl md:text-4xl font-bold mt-3 flex items-center gap-2">
               <svg
                 ref={(el) => {
                   arrowRefs.current[index] = el;
@@ -167,7 +173,7 @@ const Projects = () => {
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-center w-screen">
+      <div className="flex items-center justify-center w-full">
         <Link to="/projects">
           <button
             className="border-2 border-transparent mt-16
@@ -179,6 +185,7 @@ const Projects = () => {
             </div>
           </button>
         </Link>
+      </div>
       </div>
     </section>
   );

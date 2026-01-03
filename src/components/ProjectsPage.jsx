@@ -86,7 +86,7 @@ const ProjectsPage = () => {
               Featured Projects
             </h1>
             <p className="text-gray-300 mt-3 max-w-2xl">
-              A curated selection of builds across web, design, and data—hover to
+              A curated selection of builds across web, design, and data hover to
               explore the visuals and stack.
             </p>
           </div>

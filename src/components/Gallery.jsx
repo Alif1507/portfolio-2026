@@ -1,3 +1,4 @@
+
 import { useGSAP } from "@gsap/react";
 import React, { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -33,11 +34,17 @@ const Gallery = () => {
   }, []);
   return (
     <section className="flex flex-col justify-center items-center mt-64">
-      <div className="flex flex-row gap-10">
-        <img src="/img/pfp-g0d.png" alt="@g0.d_usopp.ps" />
-        <div>
-          <h1 className="text-[128px] text-white font-bold">My Gallery</h1>
-          <p className="text-[32px] text-white">@g0.d_usopp.ps</p>
+      <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center text-center justify-center md:text-left w-full max-w-5xl">
+        <img
+          src="/img/pfp-g0d.png"
+          alt="@g0.d_usopp.ps"
+          className="w-28 h-28 md:w-40 md:h-40 rounded-full object-cover"
+        />
+        <div className="space-y-2">
+          <h1 className="text-white font-bold text-[42px] sm:text-[56px] md:text-[72px] lg:text-[96px] leading-none">
+            My Gallery
+          </h1>
+          <p className="text-white text-lg md:text-2xl">@g0.d_usopp.ps</p>
         </div>
       </div>
       <div className="w-full justify-center">

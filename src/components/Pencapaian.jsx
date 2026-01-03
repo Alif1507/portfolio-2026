@@ -88,7 +88,7 @@ const Pencapaian = () => {
 
   return (
     <section className="mt-64" style={{ fontFamily: "Sora Variable" }} id="achievements">
-      <h1 className="text-white text-[96px] font-bold mb-24 ml-16">
+      <h1 className="text-white md:text-[96px] text-4xl font-bold mb-24 ml-16">
         My Achievements
       </h1>
       <div className="flex flex-col items-center justify-center">

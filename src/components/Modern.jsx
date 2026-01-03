@@ -18,6 +18,13 @@ const Modern = () => {
     const charEls = charsRef.current;
 
     const ctx = gsap.context(() => {
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+      if (isMobile) {
+        if (line) gsap.set(line, { clearProps: "all" });
+        if (charEls.length) gsap.set(charEls, { clearProps: "all" });
+        return;
+      }
 
       gsap.set(charEls, { x: 20, opacity: 1 });
 
@@ -56,8 +63,8 @@ const Modern = () => {
   }, [chars.length]);
 
   return (
-    <section className="mt-64" ref={sectionRef}>
-      <h1 ref={lineRef} className="text-[100px] font-bold text-white">
+    <section className="mt-64 text-center md:text-start text-3xl" ref={sectionRef}>
+      <h1 ref={lineRef} className="md:text-[100px] font-bold text-white">
         {" "}
         {chars.map((ch, i) => (
           <span
@@ -69,7 +76,7 @@ const Modern = () => {
           </span>
         ))}
       </h1>
-      <h1 className="text-[100px] font-bold text-white text-center">
+      <h1 className="md:text-[100px] font-bold text-white text-center">
         CLEAN UI WITH LATEST TECH
       </h1>
     </section>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Bumi3d from "./assets/Bumi3d";
 import Particles from "./assets/Particles";
 import BubbleMenu from "./assets/BubbleMenu";
+import Bumi3dMobile from "./assets/Bumi3dMobile";
 
 const Together = () => {
   const [form, setForm] = useState({
@@ -72,7 +73,8 @@ const Together = () => {
     >
       <div className="relative w-screen h-screen flex items-center justify-center">
         <Bumi3d />
-        <h1 className="text-white text-[128px] font-bold absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] text-center">
+        {/* <Bumi3dMobile /> */}
+        <h1 className="text-white text-6xl md:text-[128px] font-bold text-nowrap absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] text-center">
           Let’s Work <br />
           Together!
         </h1>
