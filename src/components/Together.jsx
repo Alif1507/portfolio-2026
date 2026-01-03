@@ -10,8 +10,7 @@ const Together = () => {
     email: "",
     message: "",
   });
-
-  const recipientEmail = "m.alifwahyudi2007@gmail.com";
+  const [status, setStatus] = useState({ state: "idle", message: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,12 +19,34 @@ const Together = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const subject = `Message from ${form.name || "Portfolio"}`;
-    const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`;
-    const mailto = `mailto:${recipientEmail}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+    setStatus({ state: "sending", message: "" });
+
+    fetch("https://formspree.io/f/xykzdwdo", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        message: form.message,
+      }),
+    })
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.error) {
+          throw new Error(data.error || "Failed to send message.");
+        }
+        setStatus({ state: "success", message: "Message sent! Thanks for reaching out." });
+        setForm({ name: "", email: "", message: "" });
+      })
+      .catch((err) => {
+        setStatus({
+          state: "error",
+          message: err.message || "Could not send message. Please try again.",
+        });
+      });
   };
 
   const items = [
@@ -136,13 +157,24 @@ const Together = () => {
           <div className="relative">
             <button
               type="submit"
-              className="w-full rounded-xl p-[2px] bg-gradient-to-r from-purple-500 via-blue-500 to-red-500 hover:brightness-110 transition-all"
+              disabled={status.state === "sending"}
+              className="w-full rounded-xl p-[2px] bg-gradient-to-r from-purple-500 via-blue-500 to-red-500 hover:brightness-110 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
             >
               <span className="block w-full rounded-[10px] bg-black py-3 text-base font-semibold tracking-wide">
-                Send Message
+                {status.state === "sending" ? "Sending..." : "Send Message"}
               </span>
             </button>
           </div>
+          {status.message && (
+            <p
+              className={`text-sm ${
+                status.state === "error" ? "text-red-400" : "text-green-400"
+              }`}
+              aria-live="polite"
+            >
+              {status.message}
+            </p>
+          )}
         </form>
         <BubbleMenu
         items={items}
