@@ -1,17 +1,57 @@
-# React + Vite
+# Portfolio 2026
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal portfolio for Muhammad Alif Wahyudi built with React and Vite. The site blends motion-heavy hero moments, scrolling marquees, and GSAP-powered microinteractions with a clean, dark UI that highlights projects, achievements, and a photography gallery.
 
-Currently, two official plugins are available:
+## What is inside
+- Landing experience with custom opening animation, sticky navbar, hero headline split-animations, and CTA buttons.
+- About card with tilt interaction and stacked marquees, followed by a bold “I build modern & clean UI” statement.
+- Tech Stack marquee rows showcasing tools (React, Tailwind, GSAP, Three.js, etc).
+- Projects grid (home shows top 4, `/projects` lists all) that fetches live data via Axios and uses hover motion plus deep links to the hosted work.
+- Achievements section combining competition cards and Swiper-based certification carousel.
+- Photography gallery with scroll-pinned video playback and responsive grid fallback on mobile, plus Instagram call-to-action marquee.
+- Click-spark cursor effect and consistent Sora variable typography across pages.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech stack
+- React 19 + Vite
+- Tailwind CSS (utility-first styling)
+- GSAP + @gsap/react for scroll/entrance motion
+- React Router for routing (`/` home, `/projects` full projects page)
+- Axios for remote JSON fetching
+- Swiper and react-fast-marquee for carousels/marquees
+- Motion (framer-motion compatible API) for project page transitions
 
-## React Compiler
+## Getting started
+1) Install dependencies
+```bash
+npm install
+```
+2) Run the dev server (default on http://localhost:5173)
+```bash
+npm run dev
+```
+3) Build for production
+```bash
+npm run build
+```
+4) Preview the production build locally
+```bash
+npm run preview
+```
+5) Lint the code
+```bash
+npm run lint
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Data sources
+Projects, competitions, and certifications load from hosted JSON endpoints under `https://projects-sooty-chi.vercel.app`. Thumbnails are served from GitHub raw URLs. Make sure the client has internet access; otherwise those sections will show loading/error states. To self-host data, point the Axios calls in `src/components/Projects.jsx`, `src/components/ProjectsPage.jsx`, and `src/components/Pencapaian.jsx` to your own JSON sources or replace them with local assets.
 
-## Expanding the ESLint configuration
+## Project structure (high level)
+- `src/App.jsx` – Router and page composition.
+- `src/components/` – UI sections (Hero, About, Modern, Tech, Projects, Achievements, Gallery, Footer, etc) plus route-specific pages.
+- `src/components/assets/` – Reusable UI primitives (tilted cards, click spark, profile card, etc).
+- `public/` – Static assets, video, and images used across the site.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# portfolio-2026
+## Customization tips
+- Update profile/social links in `Hero.jsx`, `Gallery.jsx`, and CTA buttons.
+- Swap tech logos and gallery imagery in `public/img` and `public/gellery`.
+- Adjust accent gradients and timings in GSAP timelines (`Hero.jsx`, `Modern.jsx`) to match your own brand feel.
