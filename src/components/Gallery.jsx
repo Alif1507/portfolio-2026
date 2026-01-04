@@ -1,4 +1,5 @@
 
+
 import { useGSAP } from "@gsap/react";
 import React, { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -6,6 +7,50 @@ import gsap from "gsap";
 import Marquee from "react-fast-marquee";
 
 const Gallery = () => {
+   const galleryItems = [
+    {
+      title: "Neon Noir",
+      subtitle: "Night street study",
+      img: "/gellery/1.png",
+      colSpan: "col-span-4",
+      rowSpan: "row-span-2",
+    },
+    {
+      title: "Portrait Glow",
+      subtitle: "Mood practice",
+      img: "/gellery/2.png",
+      colSpan: "col-span-2",
+      rowSpan: "row-span-2",
+    },
+    {
+      title: "Cyber Alley",
+      subtitle: "Perspective",
+      img: "/gellery/3.png",
+      colSpan: "col-span-3",
+      rowSpan: "row-span-3",
+    },
+    {
+      title: "Studio Light",
+      subtitle: "Soft shadow",
+      img: "/gellery/4.png",
+      colSpan: "col-span-3",
+      rowSpan: "row-span-2",
+    },
+    {
+      title: "Chrome Dreams",
+      subtitle: "Specular study",
+      img: "/gellery/5.png",
+      colSpan: "col-span-4",
+      rowSpan: "row-span-3",
+    },
+    {
+      title: "Kinetic Blur",
+      subtitle: "Motion test",
+      img: "/gellery/6.png",
+      colSpan: "col-span-2",
+      rowSpan: "row-span-2",
+    },
+  ];
   const videoRef = useRef();
 
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -47,7 +92,7 @@ const Gallery = () => {
           <p className="text-white text-lg md:text-2xl">@g0.d_usopp.ps</p>
         </div>
       </div>
-      <div className="w-full justify-center">
+      <div className="w-full justify-center max-sm:hidden">
         <video
           src="/output.mp4"
           ref={videoRef}
@@ -56,6 +101,27 @@ const Gallery = () => {
           preload="auto"
         />
       </div>
+
+      <div className="sm:hidden mt-10 px-4 w-full">
+          <div className="grid grid-cols-6 auto-rows-[84px] gap-3">
+            {galleryItems.map((item, idx) => (
+              <div
+                key={`${item.title}-${idx}`}
+                className={`relative overflow-hidden rounded-2xl bg-[#111111] ${item.colSpan} ${item.rowSpan}`}
+              >
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute left-3 bottom-3 text-white space-y-1">
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       <Marquee direction="right">
         <div className="mx-10">
           <a href="https://www.instagram.com/g0.d_usopp.ps/" target="_blank">
