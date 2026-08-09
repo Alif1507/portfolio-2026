@@ -25,12 +25,6 @@ const Navbar = () => {
   },
 
   {
-    id: 3,
-    text: "Gallery",
-    link: "#gallery",
-  },
-
-  {
     id: 4,
     text: "Projects",
     link: "#projects",

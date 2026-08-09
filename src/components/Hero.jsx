@@ -81,7 +81,7 @@ const Hero = () => {
           Muhammad Alif Wahyudi
         </h1>
         <p className="text-3xl hero-description bg-gradient-to-r from-white to-[#999999] bg-clip-text text-transparent text-center relative z-50 overflow-hidden mt-4">
-          I’m a Web Developer, UI/UX Designer, and Photographer.
+          I’m a Web Developer, UI/UX Designer, and Mobile Developer.
         </p>
         <div className="flex flex-row items-center justify-center mt-10 gap-10">
           <a href="https://github.com/Alif1507" target="_blank">

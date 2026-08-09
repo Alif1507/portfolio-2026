@@ -24,7 +24,6 @@ const HomePage = () => (
     <Tech />
     <Projects />
     <Pencapaian />
-    <Gallery />
     <Together />
     <Footer />
   </>

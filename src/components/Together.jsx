@@ -89,7 +89,7 @@ const Together = () => {
   return (
     <section
       style={{ fontFamily: "Sora Variable" }}
-      className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden mb-64"
+      className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden mb-64 mt-64"
       id="contact"
     >
       <div className="relative w-screen h-screen flex items-center justify-center">

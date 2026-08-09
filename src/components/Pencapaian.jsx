@@ -1,17 +1,82 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import TiltedCard from "./assets/TiltedCard";
 import axios from "axios";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import "./CertificationsCarousel.css";
 
 const Pencapaian = () => {
   const [competition, setCompetition] = useState([]);
   const [certif, setCertif] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const trackRef = useRef(null);
+  const cardRefs = useRef([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const scrollToIndex = useCallback((index) => {
+    const track = trackRef.current;
+    const card = cardRefs.current[index];
+    if (!track || !card) return;
+
+    const trackRect = track.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const offset =
+      cardRect.left -
+      trackRect.left +
+      track.scrollLeft -
+      (trackRect.width - cardRect.width) / 2;
+
+    track.scrollTo({ left: offset, behavior: "smooth" });
+  }, []);
+
+  const handlePrev = () => {
+    const next = Math.max(activeIndex - 1, 0);
+    setActiveIndex(next);
+    scrollToIndex(next);
+  };
+
+  const handleNext = () => {
+    const next = Math.min(activeIndex + 1, certif.length - 1);
+    setActiveIndex(next);
+    scrollToIndex(next);
+  };
+
+  // Sync active card state when scrolling manually
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || certif.length === 0) return;
+
+    let timeout;
+    const handleScroll = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const trackRect = track.getBoundingClientRect();
+        const center = trackRect.left + trackRect.width / 2;
+
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+
+        cardRefs.current.forEach((card, i) => {
+          if (!card) return;
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.left + rect.width / 2;
+          const distance = Math.abs(cardCenter - center);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = i;
+          }
+        });
+
+        setActiveIndex(closestIndex);
+      }, 100);
+    };
+
+    track.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      track.removeEventListener("scroll", handleScroll);
+      clearTimeout(timeout);
+    };
+  }, [certif]);
 
   useEffect(() => {
     let isMounted = true;
@@ -83,8 +148,8 @@ const Pencapaian = () => {
     };
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (loading) return <p className="text-white text-center mt-10">Loading...</p>;
+  if (error) return <p style={{ color: "red" }} className="text-center mt-10">{error}</p>;
 
   return (
     <section className="mt-64" style={{ fontFamily: "Sora Variable" }} id="achievements">
@@ -95,9 +160,8 @@ const Pencapaian = () => {
         <h1 className="text-white text-4xl">Competitions</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-14 mx-4 md:mx-16 mt-16">
           {competition.map((c, index) => (
-            <a className="cursor-pointer" href={c.link} target="_blank">
+            <a key={c.id ?? index} className="cursor-pointer" href={c.link} target="_blank" rel="noopener noreferrer">
               <TiltedCard
-                key={c.id ?? index}
                 imageSrc={`https://github.com/Alif1507/projects/blob/main/Competiton/img/thubnail${c.id}.jpg?raw=true`}
                 altText={c.category}
                 captionText={c.category}
@@ -121,57 +185,80 @@ const Pencapaian = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="text-white text-4xl mt-24 mb-10">Certifications</h1>
-        <article className="relative w-full px-4 md:px-16">
-          <Swiper
-            modules={[Navigation, Pagination]}
-            spaceBetween={20}
-            slidesPerView={1}
-            navigation
-            pagination={{ clickable: true }}
-            style={{
-              "--swiper-navigation-color": "#c0c0c0",
-              "--swiper-pagination-color": "#c0c0c0",
-              "--swiper-pagination-bullet-inactive-color": "#9aa0a6",
-              "--swiper-pagination-bullet-inactive-opacity": "1",
-            }}
-            breakpoints={{
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
-          >
-            {certif.map((cer, index) => (
-              <SwiperSlide key={cer.id ?? index}>
-                <section className="flex flex-col bg-gradient-to-r from-[#280087] to-[#C00000] items-center justify-around max-w-[410px] min-h-[400px] rounded-2xl p-1 relative mx-auto">
-                  <div className="flex flex-col items-center justify-around w-full h-full bg-black rounded-2xl p-5 text-center gap-5">
-                    <img
-                      src={`https://raw.githubusercontent.com/Alif1507/projects/refs/heads/main/Certif/img/thubnail${cer.id}.png`}
-                      className="h-[180px] w-auto"
-                      alt={cer.judul}
-                    />
-                    <h1 className="text-white font-semibold text-2xl text-center">
-                      {cer.judul}
-                    </h1>
+      <div className="flex flex-col items-center justify-center mt-24">
+        <h1 className="text-white text-4xl mb-10">Certifications</h1>
+        
+        <section className="certs-section">
+          <div className="certs-carousel">
+            <div className="certs-track" ref={trackRef}>
+              {certif.map((cer, i) => (
+                <div
+                  className={`certs-card ${i === activeIndex ? "is-active" : ""}`}
+                  key={cer.id ?? i}
+                  ref={(el) => (cardRefs.current[i] = el)}
+                >
+                  <div className="certs-card__glass">
+                    <div className="certs-card__image-wrap">
+                      <img
+                        src={`https://raw.githubusercontent.com/Alif1507/projects/refs/heads/main/Certif/img/thubnail${cer.id}.png`}
+                        alt={cer.judul}
+                        className="certs-card__image"
+                      />
+                    </div>
+                  </div>
+                  <h3 className="certs-card__title">{cer.judul}</h3>
+                  <div className="flex justify-center">
                     <a
                       href={cer.link}
-                      className="my-7"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <button className="text-white font-semibold bg-gradient-to-tr hover:scale-105 from-[#280087] to-[#C00000] cursor-pointer p-3 rounded-xl transition-transform">
-                        See More
-                      </button>
+                      <button className="certs-card__btn">See More</button>
                     </a>
                   </div>
-                </section>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </article>
+                </div>
+              ))}
+            </div>
+
+            <div className="certs-controls">
+              <button
+                className="certs-arrow certs-arrow--prev"
+                onClick={handlePrev}
+                disabled={activeIndex === 0}
+                aria-label="Previous certificate"
+              >
+                &lt;
+              </button>
+
+              <div className="certs-dots">
+                {certif.map((cer, i) => (
+                  <button
+                    key={cer.id ?? i}
+                    className={`certs-dot ${i === activeIndex ? "is-active" : ""}`}
+                    onClick={() => {
+                      setActiveIndex(i);
+                      scrollToIndex(i);
+                    }}
+                    aria-label={`Go to certificate ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                className="certs-arrow certs-arrow--next"
+                onClick={handleNext}
+                disabled={activeIndex === certif.length - 1}
+                aria-label="Next certificate"
+              >
+                &gt;
+              </button>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
   );
 };
 
 export default Pencapaian;
+
