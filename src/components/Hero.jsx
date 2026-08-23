@@ -1,111 +1,74 @@
-import React from "react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { SplitText } from "gsap/SplitText";
-import DarkVeil from "./assets/Darkveil";
-
-gsap.registerPlugin(SplitText);
+import React, { useCallback } from "react";
+import AuroraBackground from "./AuroraBackground";
+import { Github, ArrowDown } from "lucide-react";
+import "../styles/hero.css";
 
 const Hero = () => {
-  useGSAP(() => {
-    gsap.set("#nama", { overflow: "hidden" });
-    gsap.set([".hero-subtitle", ".hero-description", ".scroll-text", ".scroll-arrow"], {
-      opacity: 0,
-      y: 50
-    });
-    
-    const heroText = new SplitText("#nama", { type: "chars,words" });
-    
-    gsap.set(heroText.chars, { yPercent: 100, opacity: 0 });
-    
-    const tl = gsap.timeline();
-    
-    tl.to(".hero-subtitle", {
-      opacity: 1,
-      y: 0,
-      duration: 1.2,
-      delay: 10.9,
-      ease: "power3.out",
-    })
-    .to(".hero-description", {
-      opacity: 1,
-      y: 0,
-      duration: 1.2,
-      ease: "power3.out",
-    }, "-=0.8")
-    .to(heroText.chars, {
-      yPercent: 0,
-      opacity: 1,
-      duration: 1.8,
-      ease: "expo.out",
-      stagger: 0.05,
-    }, "-=0.5")
-    .to(".scroll-text", {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power3.out",
-    }, "-=0.3")
-    .to(".scroll-arrow", {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "back.out(1.7)",
-    }, "-=0.5");
-    
-    gsap.to(".scroll-arrow", {
-      y: -10,
-      duration: 1.5,
-      ease: "power2.inOut",
-      yoyo: true,
-      repeat: -1,
-      delay: 3
-    });
-    
+  const scrollToAbout = useCallback(() => {
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
   }, []);
 
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        scrollToAbout();
+      }
+    },
+    [scrollToAbout]
+  );
+
   return (
-    <section id="home"
-      style={{ fontFamily: "Sora Variable" }}
-      className="font-sora flex flex-col items-center relative min-h-screen"
-    >
-      <div style={{ width: '100%', height: '600px' }} className="absolute top-0">
-        <DarkVeil />
-      </div>
-     
-      <div className="relative z-10 mt-[155px]">
-        <h2 className="text-3xl hero-subtitle bg-gradient-to-r from-white to-[#999999] bg-clip-text text-transparent relative z-50 overflow-hidden">
-          Hi, I'm
-        </h2>
-        <h1 id="nama" className="text-[81px] text-white font-bold overflow-hidden leading-tight max-sm:text-center max-sm:text-[48px]">
-          Muhammad Alif Wahyudi
-        </h1>
-        <p className="text-3xl hero-description bg-gradient-to-r from-white to-[#999999] bg-clip-text text-transparent text-center relative z-50 overflow-hidden mt-4">
-          I’m a Web Developer, UI/UX Designer, and Mobile Developer.
+    <section id="home" className="hero-section" style={{ fontFamily: "Sora Variable" }}>
+      <AuroraBackground />
+
+      <div className="hero-content">
+        <p className="hero-eyebrow">Hi, I'm</p>
+
+        <div className="hero-name-mask">
+          <h1 className="hero-name">Muhammad Alif Wahyudi</h1>
+        </div>
+
+        <p className="hero-description">
+          I'm a Web Developer, UI/UX Designer, and Mobile Developer.
         </p>
-        <div className="flex flex-row items-center justify-center mt-10 gap-10">
-          <a href="https://github.com/Alif1507" target="_blank">
-            <img src="/img/github.png" className="h-[50px] w-[50px] hover:scale-105 transition-all cursor-pointer duration-300" alt="" />
+
+        <div className="hero-actions">
+          <a
+            href="https://github.com/Alif1507"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-btn-github"
+            aria-label="GitHub Profile"
+          >
+            <Github size={22} strokeWidth={1.8} />
           </a>
-          <button className="border-2 border-transparent
-        bg-gradient-to-r from-[#280087] to-[#C00000]
-        bg-clip-padding p-1 relative text-white rounded-full hover:scale-105 transition-all duration-300 cursor-pointer">
-            <div className="bg-black text-white p-4 rounded-full">
-              <a href="https://www.linkedin.com/in/muhammad-alif-wahyudi-06617b305/" target="_blank">
-                Connect With Me
-              </a>
-            </div>
-          </button>
+
+          <a
+            href="https://www.linkedin.com/in/muhammad-alif-wahyudi-06617b305/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-btn-connect"
+          >
+            <span className="hero-btn-connect-inner">Connect With Me</span>
+          </a>
         </div>
       </div>
 
-     
-      <div className="mt-[155px] flex flex-col items-center gap-10 relative z-10">
-        <h1 className="text-3xl bg-gradient-to-r from-white to-[#999999] bg-clip-text text-transparent font-extralight">
-          Scroll Down
-        </h1>
-        <div className="animate-bounce">
-          <img src="/img/Arrow 1.png" alt="" />
+      <div
+        className="hero-scroll-container"
+        onClick={scrollToAbout}
+        onKeyDown={handleKeyDown}
+        role="button"
+        tabIndex={0}
+        aria-label="Scroll down to about section"
+      >
+        <span className="scroll-text">Scroll Down</span>
+        <div className="scroll-arrow-wrapper">
+          <ArrowDown size={18} strokeWidth={1.5} />
         </div>
       </div>
     </section>

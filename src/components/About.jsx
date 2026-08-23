@@ -19,68 +19,68 @@ const About = () => {
         onContactClick={() => console.log("Contact clicked")}
       />
     </div>
-    <div>
-      <div className="flex flex-col gap-10 absolute top-0 rotate-6">
-      <Marquee>
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-      </Marquee>
+    <div className="overflow-hidden absolute inset-0 pointer-events-none select-none flex justify-center items-center">
+      <div className="flex flex-col gap-8 md:gap-12 w-[140vw] -rotate-6 opacity-30 md:opacity-40">
+        <Marquee speed={35} gradient={false}>
+          {Array.from({ length: 10 }).map((_, i) => (
+            <span
+              key={i}
+              className="mx-6 md:mx-10 text-6xl sm:text-8xl md:text-9xl font-extrabold tracking-widest text-transparent"
+              style={{ WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.3)" }}
+            >
+              MAW
+            </span>
+          ))}
+        </Marquee>
 
-      <Marquee direction="right">
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-      </Marquee>
+        <Marquee direction="right" speed={30} gradient={false}>
+          {Array.from({ length: 10 }).map((_, i) => (
+            <span
+              key={i}
+              className="mx-6 md:mx-10 text-6xl sm:text-8xl md:text-9xl font-extrabold tracking-widest text-transparent"
+              style={{ WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.3)" }}
+            >
+              MAW
+            </span>
+          ))}
+        </Marquee>
 
-      <Marquee >
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-      </Marquee>
+        <Marquee speed={40} gradient={false}>
+          {Array.from({ length: 10 }).map((_, i) => (
+            <span
+              key={i}
+              className="mx-6 md:mx-10 text-6xl sm:text-8xl md:text-9xl font-extrabold tracking-widest text-transparent"
+              style={{ WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.3)" }}
+            >
+              MAW
+            </span>
+          ))}
+        </Marquee>
 
-      <Marquee direction="right" >
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-      </Marquee>
+        <Marquee direction="right" speed={35} gradient={false}>
+          {Array.from({ length: 10 }).map((_, i) => (
+            <span
+              key={i}
+              className="mx-6 md:mx-10 text-6xl sm:text-8xl md:text-9xl font-extrabold tracking-widest text-transparent"
+              style={{ WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.3)" }}
+            >
+              MAW
+            </span>
+          ))}
+        </Marquee>
 
-      <Marquee>
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-        <img className="mx-6" src="/img/MAW.png" alt="MAW" />
-      </Marquee>
-    </div>
+        <Marquee speed={25} gradient={false}>
+          {Array.from({ length: 10 }).map((_, i) => (
+            <span
+              key={i}
+              className="mx-6 md:mx-10 text-6xl sm:text-8xl md:text-9xl font-extrabold tracking-widest text-transparent"
+              style={{ WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.3)" }}
+            >
+              MAW
+            </span>
+          ))}
+        </Marquee>
+      </div>
     </div>
 
     </section>

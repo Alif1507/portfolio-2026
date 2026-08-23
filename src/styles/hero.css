@@ -1,0 +1,378 @@
+/* =========================================================
+   Hero Section
+   ========================================================= */
+.hero-section {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #000000;
+  color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 1.25rem 40px;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   Aurora Background
+   ========================================================= */
+.aurora-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.65;
+  will-change: transform;
+}
+
+.aurora-1 {
+  width: min(700px, 85vw);
+  height: 260px;
+  top: -60px;
+  left: -80px;
+  background: radial-gradient(
+    circle,
+    rgba(147, 51, 234, 0.8) 0%,
+    rgba(88, 28, 135, 0.28) 70%,
+    transparent 100%
+  );
+}
+
+.aurora-2 {
+  width: min(800px, 90vw);
+  height: 280px;
+  top: -90px;
+  left: 20%;
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.7) 0%,
+    rgba(126, 34, 206, 0.3) 70%,
+    transparent 100%
+  );
+}
+
+.aurora-3 {
+  width: min(550px, 75vw);
+  height: 230px;
+  top: -40px;
+  right: -60px;
+  background: radial-gradient(
+    circle,
+    rgba(217, 70, 239, 0.65) 0%,
+    rgba(168, 85, 247, 0.22) 70%,
+    transparent 100%
+  );
+}
+
+/* =========================================================
+   Hero Content
+   ========================================================= */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 1100px;
+  width: 100%;
+  flex: 1;
+  justify-content: center;
+}
+
+/* ---- Eyebrow ---- */
+.hero-eyebrow {
+  font-size: clamp(1.1rem, 2.2vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  background: linear-gradient(90deg, #ffffff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.35rem;
+}
+
+/* ---- Name ---- */
+.hero-name-mask {
+  overflow: hidden;
+  display: block;
+  padding: 0.05em 0;
+  max-width: 100%;
+}
+
+.hero-name {
+  font-size: clamp(2.2rem, 5.5vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  clip-path: inset(0 0% 0 0);
+  will-change: clip-path;
+}
+
+/* ---- Description ---- */
+.hero-description {
+  font-size: clamp(0.95rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  background: linear-gradient(90deg, #f4f4f5 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  max-width: 720px;
+  margin: 1rem auto 0;
+}
+
+/* =========================================================
+   Hero Actions
+   ========================================================= */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-btn-github {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-btn-github:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(192, 132, 252, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+}
+
+.hero-btn-connect {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #7c3aed 0%, #dc2626 100%);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-btn-connect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 22px rgba(147, 51, 234, 0.35);
+}
+
+.hero-btn-connect-inner {
+  padding: 0.75rem 1.6rem;
+  background: #09090b;
+  border-radius: 9999px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.hero-btn-connect:hover .hero-btn-connect-inner {
+  background: #18181b;
+}
+
+/* =========================================================
+   Scroll Down Indicator
+   ========================================================= */
+.hero-scroll-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 2rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.scroll-text {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, rgba(255,255,255,0.7) 0%, rgba(113,113,122,0.7) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 500;
+}
+
+.scroll-arrow-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* =========================================================
+   Responsive Breakpoints
+   ========================================================= */
+
+/* ---- Small phones (≤ 380px, e.g. iPhone SE) ---- */
+@media (max-width: 380px) {
+  .hero-section {
+    padding: 80px 1rem 24px;
+  }
+  .hero-eyebrow {
+    font-size: 0.95rem;
+  }
+  .hero-name {
+    font-size: 1.75rem;
+    white-space: normal;
+    word-break: break-word;
+  }
+  .hero-description {
+    font-size: 0.85rem;
+  }
+  .hero-btn-github {
+    width: 44px;
+    height: 44px;
+  }
+  .hero-btn-connect-inner {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.82rem;
+  }
+  .scroll-text {
+    font-size: 0.65rem;
+  }
+}
+
+/* ---- Phones (381–640px) ---- */
+@media (min-width: 381px) and (max-width: 640px) {
+  .hero-section {
+    padding: 90px 1rem 28px;
+  }
+  .hero-name {
+    font-size: clamp(1.9rem, 8vw, 2.8rem);
+    white-space: normal;
+  }
+  .hero-description {
+    font-size: 0.9rem;
+    max-width: 90%;
+  }
+  .hero-btn-connect-inner {
+    padding: 0.7rem 1.4rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ---- Tablets portrait (641–768px) ---- */
+@media (min-width: 641px) and (max-width: 768px) {
+  .hero-section {
+    padding: 100px 1.25rem 32px;
+  }
+  .hero-name {
+    font-size: clamp(2.2rem, 5.5vw, 3.2rem);
+    white-space: normal;
+  }
+}
+
+/* ---- Tablets landscape / small desktops (769–1024px) ---- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-section {
+    padding: 110px 1.5rem 36px;
+  }
+  .hero-name {
+    font-size: clamp(2.8rem, 5vw, 4rem);
+  }
+  .aurora-1 { width: min(600px, 80vw); height: 220px; }
+  .aurora-2 { width: min(700px, 85vw); height: 240px; }
+  .aurora-3 { width: min(450px, 70vw); height: 200px; }
+}
+
+/* ---- Large desktops (≥ 1440px) ---- */
+@media (min-width: 1440px) {
+  .hero-name {
+    font-size: 5.5rem;
+  }
+  .hero-description {
+    font-size: 1.6rem;
+  }
+}
+
+/* ---- Landscape phones ---- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    padding: 70px 1.5rem 20px;
+    min-height: auto;
+    height: auto;
+  }
+  .hero-name {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    white-space: nowrap;
+  }
+  .hero-eyebrow {
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+  }
+  .hero-description {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  .hero-actions {
+    margin-top: 1rem;
+  }
+  .hero-scroll-container {
+    padding-top: 0.75rem;
+  }
+  .aurora { filter: blur(60px); }
+  .aurora-1 { width: 400px; height: 160px; }
+  .aurora-2 { width: 450px; height: 170px; }
+  .aurora-3 { width: 300px; height: 140px; }
+}
+
+/* ---- Touch devices: disable hover transforms ---- */
+@media (hover: none) {
+  .hero-btn-github:hover,
+  .hero-btn-connect:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ---- Accessibility ---- */
+@media (prefers-reduced-motion: reduce) {
+  .aurora {
+    animation: none !important;
+    will-change: auto;
+  }
+}

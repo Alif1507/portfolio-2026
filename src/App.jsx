@@ -11,12 +11,12 @@ import Together from "./components/Together";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import ClickSpark from "./components/assets/ClickSpark";
-import Opening from "./components/Opening";
+import IntroLoader from "./components/IntroLoader";
 import ProjectsPage from "./components/ProjectsPage";
 
 const HomePage = () => (
   <>
-    <Opening />
+    <IntroLoader />
     <Navbar />
     <Hero />
     <About />
