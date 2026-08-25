@@ -1,10 +1,11 @@
-
+"use client";
 
 import { useGSAP } from "@gsap/react";
 import React, { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import gsap from "gsap";
 import Marquee from "react-fast-marquee";
+import Image from "next/image";
 
 const Gallery = () => {
    const galleryItems = [
@@ -80,9 +81,11 @@ const Gallery = () => {
   return (
     <section className="flex flex-col justify-center items-center mt-64">
       <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center text-center justify-center md:text-left w-full max-w-5xl">
-        <img
+        <Image
           src="/img/pfp-g0d.png"
           alt="@g0.d_usopp.ps"
+          width={160}
+          height={160}
           className="w-28 h-28 md:w-40 md:h-40 rounded-full object-cover"
         />
         <div className="space-y-2">
@@ -109,10 +112,11 @@ const Gallery = () => {
                 key={`${item.title}-${idx}`}
                 className={`relative overflow-hidden rounded-2xl bg-[#111111] ${item.colSpan} ${item.rowSpan}`}
               >
-                <img
+                <Image
                   src={item.img}
                   alt={item.title}
-                  loading="lazy"
+                  fill
+                  sizes="50vw"
                   className="h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -123,47 +127,13 @@ const Gallery = () => {
           </div>
         </div>
       <Marquee direction="right">
-        <div className="mx-10">
-          <a href="https://www.instagram.com/g0.d_usopp.ps/" target="_blank">
-            <img src="/img/instagrram.png" alt="" />
-          </a>
-        </div>
-
-        <div className="mx-10">
-          <a href="https://www.instagram.com/g0.d_usopp.ps/" target="_blank">
-            <img src="/img/instagrram.png" alt="" />
-          </a>
-        </div>
-
-        <div className="mx-10">
-          <a href="https://www.instagram.com/g0.d_usopp.ps/" target="_blank">
-            <img src="/img/instagrram.png" alt="" />
-          </a>
-        </div>
-
-        <div className="mx-10">
-          <a href="https://www.instagram.com/g0.d_usopp.ps/" target="_blank">
-            <img src="/img/instagrram.png" alt="" />
-          </a>
-        </div>
-
-        <div className="mx-10">
-          <a href="https://www.instagram.com/g0.d_usopp.ps/" target="_blank">
-            <img src="/img/instagrram.png" alt="" />
-          </a>
-        </div>
-
-        <div className="mx-10">
-          <a href="https://www.instagram.com/g0.d_usopp.ps/" target="_blank">
-            <img src="/img/instagrram.png" alt="" />
-          </a>
-        </div>
-
-        <div className="mx-10">
-          <a href="https://www.instagram.com/g0.d_usopp.ps/" target="_blank">
-            <img src="/img/instagrram.png" alt="" />
-          </a>
-        </div>
+        {Array.from({ length: 7 }).map((_, index) => (
+          <div className="mx-10" key={index}>
+            <a href="https://www.instagram.com/g0.d_usopp.ps/" target="_blank" rel="noopener noreferrer" aria-label="View the MAW photography gallery on Instagram">
+              <Image src="/img/instagrram.png" alt="" width={180} height={54} />
+            </a>
+          </div>
+        ))}
       </Marquee>
     </section>
   );

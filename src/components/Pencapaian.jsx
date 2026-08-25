@@ -1,14 +1,10 @@
+"use client";
+
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import TiltedCard from "./assets/TiltedCard";
-import axios from "axios";
-import "./CertificationsCarousel.css";
+import Image from "next/image";
 
-const Pencapaian = () => {
-  const [competition, setCompetition] = useState([]);
-  const [certif, setCertif] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
+const Pencapaian = ({ competitions = [], certificates = [] }) => {
   const trackRef = useRef(null);
   const cardRefs = useRef([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -36,7 +32,7 @@ const Pencapaian = () => {
   };
 
   const handleNext = () => {
-    const next = Math.min(activeIndex + 1, certif.length - 1);
+    const next = Math.min(activeIndex + 1, certificates.length - 1);
     setActiveIndex(next);
     scrollToIndex(next);
   };
@@ -44,7 +40,7 @@ const Pencapaian = () => {
   // Sync active card state when scrolling manually
   useEffect(() => {
     const track = trackRef.current;
-    if (!track || certif.length === 0) return;
+    if (!track || certificates.length === 0) return;
 
     let timeout;
     const handleScroll = () => {
@@ -76,94 +72,21 @@ const Pencapaian = () => {
       track.removeEventListener("scroll", handleScroll);
       clearTimeout(timeout);
     };
-  }, [certif]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function ambilData() {
-      try {
-        setLoading(true);
-        setError("");
-
-        const [competitionRes, certifRes] = await Promise.all([
-          axios.get(
-            "https://projects-sooty-chi.vercel.app/Competiton/competition.json"
-          ),
-          axios.get("https://projects-sooty-chi.vercel.app/Certif/certif.json"),
-        ]);
-
-        const competitionData = competitionRes.data;
-        const competitionNormalized = Array.isArray(competitionData)
-          ? competitionData
-          : Array.isArray(competitionData?.competition)
-          ? competitionData.competition
-          : Array.isArray(competitionData?.Competitions)
-          ? competitionData.Competitions
-          : Array.isArray(competitionData?.Competition)
-          ? competitionData.Competition
-          : [];
-
-        const certifData = certifRes.data;
-        const certifNormalized = Array.isArray(certifData)
-          ? certifData
-          : Array.isArray(certifData?.certif)
-          ? certifData.certif
-          : Array.isArray(certifData?.certifs)
-          ? certifData.certifs
-          : [];
-
-        if (isMounted) {
-          let message = "";
-
-          if (competitionNormalized.length === 0) {
-            message = "Unexpected response format from Competitions API.";
-          } else {
-            setCompetition(competitionNormalized);
-          }
-
-          if (certifNormalized.length === 0) {
-            message = "Unexpected response format from Certif API.";
-          } else {
-            setCertif(certifNormalized);
-          }
-
-          if (message) setError(message);
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError(
-            err.response?.data?.message || err.message || "Something went wrong"
-          );
-        }
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    }
-
-    ambilData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  if (loading) return <p className="text-white text-center mt-10">Loading...</p>;
-  if (error) return <p style={{ color: "red" }} className="text-center mt-10">{error}</p>;
+  }, [certificates]);
 
   return (
     <section className="mt-64" style={{ fontFamily: "Sora Variable" }} id="achievements">
-      <h1 className="text-white md:text-[96px] text-4xl font-bold mb-24 ml-16">
+      <h2 className="text-white md:text-[96px] text-4xl font-bold mb-24 ml-16">
         My Achievements
-      </h1>
+      </h2>
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-white text-4xl">Competitions</h1>
+        <h3 className="text-white text-4xl">Competitions</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-14 mx-4 md:mx-16 mt-16">
-          {competition.map((c, index) => (
+          {competitions.map((c, index) => (
             <a key={c.id ?? index} className="cursor-pointer" href={c.link} target="_blank" rel="noopener noreferrer">
               <TiltedCard
-                imageSrc={`https://github.com/Alif1507/projects/blob/main/Competiton/img/thubnail${c.id}.jpg?raw=true`}
-                altText={c.category}
+                imageSrc={`https://raw.githubusercontent.com/Alif1507/projects/main/Competiton/img/thubnail${c.id}.jpg`}
+                altText={`${c.judul} competition preview`}
                 captionText={c.category}
                 containerHeight="300px"
                 containerWidth="300px"
@@ -186,12 +109,12 @@ const Pencapaian = () => {
       </div>
 
       <div className="flex flex-col items-center justify-center mt-24">
-        <h1 className="text-white text-4xl mb-10">Certifications</h1>
+        <h3 className="text-white text-4xl mb-10">Certifications</h3>
         
         <section className="certs-section">
           <div className="certs-carousel">
             <div className="certs-track" ref={trackRef}>
-              {certif.map((cer, i) => (
+              {certificates.map((cer, i) => (
                 <div
                   className={`certs-card ${i === activeIndex ? "is-active" : ""}`}
                   key={cer.id ?? i}
@@ -199,9 +122,12 @@ const Pencapaian = () => {
                 >
                   <div className="certs-card__glass">
                     <div className="certs-card__image-wrap">
-                      <img
+                      <Image
                         src={`https://raw.githubusercontent.com/Alif1507/projects/refs/heads/main/Certif/img/thubnail${cer.id}.png`}
                         alt={cer.judul}
+                        width={800}
+                        height={500}
+                        sizes="(max-width: 768px) 85vw, 520px"
                         className="certs-card__image"
                       />
                     </div>
@@ -212,8 +138,9 @@ const Pencapaian = () => {
                       href={cer.link}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="certs-card__btn"
                     >
-                      <button className="certs-card__btn">See More</button>
+                      See credential
                     </a>
                   </div>
                 </div>
@@ -231,7 +158,7 @@ const Pencapaian = () => {
               </button>
 
               <div className="certs-dots">
-                {certif.map((cer, i) => (
+                {certificates.map((cer, i) => (
                   <button
                     key={cer.id ?? i}
                     className={`certs-dot ${i === activeIndex ? "is-active" : ""}`}
@@ -247,7 +174,7 @@ const Pencapaian = () => {
               <button
                 className="certs-arrow certs-arrow--next"
                 onClick={handleNext}
-                disabled={activeIndex === certif.length - 1}
+                disabled={activeIndex === certificates.length - 1}
                 aria-label="Next certificate"
               >
                 &gt;

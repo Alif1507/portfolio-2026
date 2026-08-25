@@ -1,8 +1,25 @@
+"use client";
+
 import React, { useState } from "react";
-import Bumi3d from "./assets/Bumi3d";
-import Particles from "./assets/Particles";
-import BubbleMenu from "./assets/BubbleMenu";
-import Bumi3dMobile from "./assets/Bumi3dMobile";
+import dynamic from "next/dynamic";
+
+const Bumi3d = dynamic(() => import("./assets/Bumi3d"), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_center,rgba(109,40,217,0.28),transparent_42%)]"
+      aria-hidden="true"
+    />
+  ),
+});
+const Particles = dynamic(() => import("./assets/Particles"), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0 bg-black" aria-hidden="true" />,
+});
+const BubbleMenu = dynamic(() => import("./assets/BubbleMenu"), {
+  ssr: false,
+  loading: () => <div className="h-32" aria-hidden="true" />,
+});
 
 const Together = () => {
   const [form, setForm] = useState({
@@ -89,17 +106,16 @@ const Together = () => {
   return (
     <section
       style={{ fontFamily: "Sora Variable" }}
-      className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden mb-64 mt-64"
+      className="relative isolate mt-64 mb-64 flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black"
       id="contact"
     >
-      <div className="relative w-screen h-screen flex items-center justify-center">
+      <div className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden bg-black">
         <Bumi3d />
-        {/* <Bumi3dMobile /> */}
-        <h1 className="text-white text-6xl md:text-[128px] font-bold text-nowrap absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] text-center">
+        <h2 className="pointer-events-none absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 px-5 text-center text-5xl font-bold leading-[0.95] text-white sm:text-6xl md:text-[128px]">
           Let’s Work <br />
           Together!
-        </h1>
-        <div className="absolute h-full w-full -z-10">
+        </h2>
+        <div className="absolute inset-0 z-0">
           <Particles
             particleColors={["#ffffff", "#ffffff"]}
             particleCount={200}
@@ -112,7 +128,7 @@ const Together = () => {
           />
         </div>
       </div>
-      <div className="mt-24 w-[400px] md:w-[600px] lg:w-[1000px] px-4 md:px-0">
+      <div className="relative z-20 mt-24 w-full max-w-[1000px] px-4 md:px-6">
         <form onSubmit={handleSubmit} className="w-full space-y-8 text-white">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <label className="flex flex-col gap-3 text-sm md:text-base">

@@ -19,7 +19,8 @@
 }
 
 /* =========================================================
-   Aurora Background
+   DarkVeil Background
+   The class name stays compatible with the intro timeline.
    ========================================================= */
 .aurora-container {
   position: absolute;
@@ -29,51 +30,26 @@
   z-index: 1;
 }
 
-.aurora {
+.darkveil-container {
+  background: #000000;
+}
+
+.darkveil-container canvas {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.65;
-  will-change: transform;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  opacity: 0.72;
 }
 
-.aurora-1 {
-  width: min(700px, 85vw);
-  height: 260px;
-  top: -60px;
-  left: -80px;
-  background: radial-gradient(
-    circle,
-    rgba(147, 51, 234, 0.8) 0%,
-    rgba(88, 28, 135, 0.28) 70%,
-    transparent 100%
-  );
-}
-
-.aurora-2 {
-  width: min(800px, 90vw);
-  height: 280px;
-  top: -90px;
-  left: 20%;
-  background: radial-gradient(
-    circle,
-    rgba(99, 102, 241, 0.7) 0%,
-    rgba(126, 34, 206, 0.3) 70%,
-    transparent 100%
-  );
-}
-
-.aurora-3 {
-  width: min(550px, 75vw);
-  height: 230px;
-  top: -40px;
-  right: -60px;
-  background: radial-gradient(
-    circle,
-    rgba(217, 70, 239, 0.65) 0%,
-    rgba(168, 85, 247, 0.22) 70%,
-    transparent 100%
-  );
+.darkveil-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.28) 52%, rgba(0, 0, 0, 0.78) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.18), transparent 30%, rgba(0, 0, 0, 0.52));
 }
 
 /* =========================================================
@@ -314,9 +290,6 @@
   .hero-name {
     font-size: clamp(2.8rem, 5vw, 4rem);
   }
-  .aurora-1 { width: min(600px, 80vw); height: 220px; }
-  .aurora-2 { width: min(700px, 85vw); height: 240px; }
-  .aurora-3 { width: min(450px, 70vw); height: 200px; }
 }
 
 /* ---- Large desktops (≥ 1440px) ---- */
@@ -354,10 +327,6 @@
   .hero-scroll-container {
     padding-top: 0.75rem;
   }
-  .aurora { filter: blur(60px); }
-  .aurora-1 { width: 400px; height: 160px; }
-  .aurora-2 { width: 450px; height: 170px; }
-  .aurora-3 { width: 300px; height: 140px; }
 }
 
 /* ---- Touch devices: disable hover transforms ---- */
@@ -371,8 +340,7 @@
 
 /* ---- Accessibility ---- */
 @media (prefers-reduced-motion: reduce) {
-  .aurora {
-    animation: none !important;
-    will-change: auto;
+  .darkveil-container canvas {
+    opacity: 0.58;
   }
 }

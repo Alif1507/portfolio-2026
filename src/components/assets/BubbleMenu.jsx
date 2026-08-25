@@ -1,5 +1,8 @@
+"use client";
+
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import Image from "next/image";
 
 const DEFAULT_ITEMS = [
   {
@@ -227,7 +230,7 @@ export default function BubbleMenu({
           aria-label={menuAriaLabel}
           aria-pressed={isMenuOpen}
         >
-          <img src="/logo.png" alt="logo maw" className='w-full h-full' />
+          <Image src="/logo.png" alt="MAW logo" width={64} height={64} className="h-full w-full" />
         </button>
       </nav>
 

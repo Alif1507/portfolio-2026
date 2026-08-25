@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useEffect } from "react";
 import { Renderer, Program, Mesh, Triangle, Vec2 } from "ogl";
 
@@ -77,7 +79,7 @@ export default function DarkVeil({
   hueShift = 0,
   noiseIntensity = 0,
   scanlineIntensity = 0,
-  speed = 2,
+  speed = 0.5,
   scanlineFrequency = 0,
   warpAmount = 0,
   resolutionScale = 1,
@@ -85,10 +87,16 @@ export default function DarkVeil({
   const ref = useRef(null);
   useEffect(() => {
     const canvas = ref.current;
+    if (!canvas) return;
     const parent = canvas.parentElement;
+    if (!parent) return;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const renderScale = Math.max(0.25, resolutionScale);
 
     const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
+      dpr: Math.min(window.devicePixelRatio, 2) * renderScale,
       canvas,
     });
 
@@ -114,33 +122,46 @@ export default function DarkVeil({
     const resize = () => {
       const w = parent.clientWidth,
         h = parent.clientHeight;
-      renderer.setSize(w * resolutionScale, h * resolutionScale);
-      program.uniforms.uResolution.value.set(w, h);
+      renderer.setSize(w, h);
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      program.uniforms.uResolution.value.set(canvas.width, canvas.height);
     };
 
     window.addEventListener("resize", resize);
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(parent);
     resize();
 
     const start = performance.now();
     let frame = 0;
 
-    const loop = () => {
+    const renderFrame = () => {
       program.uniforms.uTime.value =
-        ((performance.now() - start) / 1000) * speed;
+        ((performance.now() - start) / 1000) * (prefersReducedMotion ? 0 : speed);
       program.uniforms.uHueShift.value = hueShift;
       program.uniforms.uNoise.value = noiseIntensity;
       program.uniforms.uScan.value = scanlineIntensity;
       program.uniforms.uScanFreq.value = scanlineFrequency;
       program.uniforms.uWarp.value = warpAmount;
       renderer.render({ scene: mesh });
+    };
+
+    const loop = () => {
+      renderFrame();
       frame = requestAnimationFrame(loop);
     };
 
-    loop();
+    if (prefersReducedMotion) {
+      renderFrame();
+    } else {
+      loop();
+    }
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", resize);
+      resizeObserver.disconnect();
     };
   }, [
     hueShift,
@@ -152,9 +173,6 @@ export default function DarkVeil({
     resolutionScale,
   ]);
   return (
-    <canvas
-      ref={ref}
-      className="w-full h-full block"
-    />
+    <canvas ref={ref} className="block h-full w-full" />
   );
 }

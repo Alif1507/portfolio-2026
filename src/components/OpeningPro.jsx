@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import CountUp from "./assets/CountUp";
 import { motion, useAnimation } from "motion/react";

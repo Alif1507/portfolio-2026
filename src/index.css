@@ -125,3 +125,31 @@
 html {
   scroll-behavior: smooth;
 }
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #000000;
+  color: #ffffff;
+  font-family: "Sora Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.55);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 2px solid #c4b5fd;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .about-marquee .rfm-marquee {
+    animation-play-state: paused !important;
+  }
+}

@@ -1,40 +1,43 @@
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import React, { useRef } from "react";
+"use client";
+
+import { Suspense, useRef } from "react";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-const Cube = () => {
-  const ref = useRef();
-  const bumiTexture = useLoader(THREE.TextureLoader, "/texture/bumi3.jpg");
+function Globe() {
+  const globeRef = useRef(null);
+  const texture = useLoader(THREE.TextureLoader, "/texture/bumi3.jpg");
+  const isCompact = useThree((state) => state.size.width < 640);
 
-  useFrame((state, delta) => {
-    ref.current.rotation.y += delta * 0.3;
+  useFrame((_, delta) => {
+    if (globeRef.current) globeRef.current.rotation.y += delta * 0.3;
   });
 
   return (
-    <mesh position={[0, 0, 0]} ref={ref}>
-      <sphereGeometry args={[2, 128, 128]} />
-      <meshStandardMaterial map={bumiTexture} />
+    <mesh ref={globeRef}>
+      <sphereGeometry args={[isCompact ? 1.35 : 2, 96, 96]} />
+      <meshStandardMaterial map={texture} />
     </mesh>
   );
-};
+}
 
-const Bumi3d = () => {
+export default function Bumi3d() {
   return (
-    <section className="relative w-screen h-screen max-sm:hidden ">
-      <Canvas>
-        <directionalLight position={[0, 0, 2]} />
-        <ambientLight />
-        <Cube></Cube>
+    <div className="pointer-events-none absolute inset-0 z-10" aria-hidden="true">
+      <div className="absolute left-1/2 top-1/2 h-[min(82vw,600px)] w-[min(82vw,600px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.34)_0%,rgba(59,130,246,0.12)_45%,transparent_72%)] blur-2xl" />
+      <Canvas
+        className="relative z-10"
+        camera={{ position: [0, 0, 5], fov: 75 }}
+        dpr={[1, 1.5]}
+        gl={{ alpha: true, antialias: true }}
+        fallback={<div className="absolute inset-0 bg-transparent" />}
+      >
+        <directionalLight position={[0, 0, 3]} intensity={1.5} />
+        <ambientLight intensity={0.75} />
+        <Suspense fallback={null}>
+          <Globe />
+        </Suspense>
       </Canvas>
-      <div
-        className="
-    absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]
-    w-[600px] h-[600px] -z-10 rounded-full
-    bg-[radial-gradient(circle_at_center,#d9d9d9_45%,rgba(192,192,192,0)_70%)]
-  "
-      ></div>
-    </section>
+    </div>
   );
-};
-
-export default Bumi3d;
+}

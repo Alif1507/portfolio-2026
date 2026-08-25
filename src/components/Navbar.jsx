@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 
 const Navbar = () => {
@@ -77,6 +79,8 @@ const Navbar = () => {
           onClick={toggleSidebar}
           className="text-white p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
           aria-label="Toggle menu"
+          aria-expanded={isSidebarOpen}
+          aria-controls="mobile-navigation"
         >
           <svg
             className="w-6 h-6"
@@ -114,6 +118,8 @@ const Navbar = () => {
 
       {/* Mobile Sidebar */}
       <aside
+        id="mobile-navigation"
+        aria-hidden={!isSidebarOpen}
         className={`md:hidden fixed top-0 right-0 h-full w-72 max-w-[80vw] bg-zinc-950/95 backdrop-blur-2xl border-l border-white/15 shadow-2xl z-[9999] transform transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
         }`}

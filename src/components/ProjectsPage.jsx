@@ -1,176 +1,107 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import TiltedCard from "./assets/TiltedCard";
-import { Link } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
 import { motion } from "motion/react";
+import TiltedCard from "./assets/TiltedCard";
 import OpeningPro from "./OpeningPro";
 
-const ProjectsPage = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchProjects() {
-      try {
-        setLoading(true);
-        setError("");
-
-        const res = await axios.get(
-          "https://projects-sooty-chi.vercel.app/Projects/projects.json"
-        );
-
-        const data = res.data;
-        const normalized = Array.isArray(data)
-          ? data
-          : Array.isArray(data?.projects)
-          ? data.projects
-          : Array.isArray(data?.Projects)
-          ? data.Projects
-          : [];
-
-        if (isMounted) {
-          if (normalized.length === 0) {
-            setError("Unexpected response format from projects API.");
-          } else {
-            setProjects(normalized);
-          }
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError(
-            err.response?.data?.message || err.message || "Something went wrong"
-          );
-        }
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    }
-
-    fetchProjects();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  if (loading) return <p className="text-white text-center mt-20">Loading...</p>;
-  if (error) return <p className="text-red-500 text-center mt-20">{error}</p>;
-
+export default function ProjectsPage({ projects = [] }) {
   return (
-    <section
-      style={{ fontFamily: "Sora Variable" }}
-      className="min-h-screen w-full bg-gradient-to-b from-[#050507] via-[#0c0f17] to-[#06070a] text-white relative overflow-hidden"
-    >
+    <main className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-[#050507] via-[#0c0f17] to-[#06070a] text-white">
       <OpeningPro />
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 -left-24 h-96 w-96 rounded-full bg-purple-700/20 blur-[120px]" />
-        <div className="absolute top-10 right-0 h-72 w-72 rounded-full bg-blue-500/20 blur-[110px]" />
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute -left-24 -top-20 h-96 w-96 rounded-full bg-purple-700/20 blur-[120px]" />
+        <div className="absolute right-0 top-10 h-72 w-72 rounded-full bg-blue-500/20 blur-[110px]" />
         <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-red-500/15 blur-[110px]" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-16 relative z-10 space-y-12">
-        <motion.div
-          className="flex flex-col md:flex-row md:items-center md:justify-between gap-6"
-          initial={{ opacity: 0, y: 30 }}
+      <div className="relative z-10 mx-auto max-w-6xl space-y-12 px-6 py-16">
+        <motion.header
+          className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 10.8 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
         >
           <div>
-            <p className="uppercase tracking-[0.3em] text-sm text-gray-400 mb-3">
-              Showcase
-            </p>
-            <h1 className="text-4xl md:text-5xl font-bold">
-              Featured Projects
-            </h1>
-            <p className="text-gray-300 mt-3 max-w-2xl">
-              A curated selection of builds across web, design, and data hover to
-              explore the visuals and stack.
+            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-violet-300">Selected work</p>
+            <h1 className="text-4xl font-bold md:text-6xl">Projects built to be used.</h1>
+            <p className="mt-4 max-w-2xl leading-relaxed text-gray-300">
+              Web products, interfaces, and data-driven builds by Muhammad Alif Wahyudi. Open a project to explore the live result.
             </p>
           </div>
-          <div className="flex gap-3">
-            <Link
-              to="/"
-              className="rounded-full px-4 py-2 border border-white/20 text-sm hover:border-white/50 transition-colors"
-            >
-              Back Home
+          <nav className="flex gap-3" aria-label="Project page navigation">
+            <Link href="/" className="rounded-full border border-white/20 px-4 py-2 text-sm transition-colors hover:border-white/50">
+              Back home
             </Link>
             <a
               href="https://www.linkedin.com/in/muhammad-alif-wahyudi-06617b305/"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full px-4 py-2 text-sm bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 hover:brightness-110 transition-all"
+              className="rounded-full bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 px-4 py-2 text-sm transition-all hover:brightness-110"
             >
               Connect
             </a>
-          </div>
-        </motion.div>
+          </nav>
+        </motion.header>
 
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 gap-10"
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: { staggerChildren: 0.12, delayChildren: 10.8 },
-            },
-          }}
-        >
-          {projects.map((proj, index) => (
-            <motion.div
-              key={proj.id ?? index}
-              variants={{
-                hidden: { opacity: 0, y: 40, scale: 0.98 },
-                show: {
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  transition: { duration: 0.5, ease: "easeOut" },
-                },
-              }}
-              className="group relative rounded-2xl p-[1px] bg-gradient-to-br from-purple-500/60 via-blue-500/60 to-red-500/60 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_50%)] pointer-events-none" />
-              <div className="relative rounded-2xl bg-[#0c0f17] p-4 h-full flex flex-col gap-4">
-                <TiltedCard
-                  imageSrc={`https://github.com/Alif1507/projects/blob/main/Projects/img/thubnail${proj.id}.png?raw=true`}
-                  altText={proj.judul}
-                  captionText={proj.category}
-                  containerHeight="260px"
-                  containerWidth="100%"
-                  imageHeight="260px"
-                  imageWidth="100%"
-                  rotateAmplitude={10}
-                  scaleOnHover={1.02}
-                  showMobileWarning={false}
-                  showTooltip={true}
-                  displayOverlayContent={true}
-                  overlayContent={
-                    <div className="bg-black/50 text-white px-3 py-2 rounded-lg text-sm">
-                      {proj.judul}
+        {projects.length > 0 ? (
+          <motion.section
+            aria-label="Project collection"
+            className="grid grid-cols-1 gap-10 sm:grid-cols-2"
+            initial="hidden"
+            animate="show"
+            variants={{
+              hidden: { opacity: 0 },
+              show: { opacity: 1, transition: { staggerChildren: 0.1 } },
+            }}
+          >
+            {projects.map((project, index) => (
+              <motion.article
+                key={project.id ?? project.judul ?? index}
+                variants={{
+                  hidden: { opacity: 0, y: 32, scale: 0.98 },
+                  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease: "easeOut" } },
+                }}
+                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/60 via-blue-500/60 to-red-500/60 p-px"
+              >
+                <div className="relative flex h-full flex-col gap-4 rounded-2xl bg-[#0c0f17] p-4">
+                  <TiltedCard
+                    imageSrc={`https://raw.githubusercontent.com/Alif1507/projects/main/Projects/img/thubnail${project.id}.png`}
+                    altText={`${project.judul} project preview`}
+                    captionText={project.category}
+                    containerHeight="260px"
+                    containerWidth="100%"
+                    imageHeight="260px"
+                    imageWidth="100%"
+                    rotateAmplitude={10}
+                    scaleOnHover={1.02}
+                    showMobileWarning={false}
+                    showTooltip
+                    displayOverlayContent
+                    overlayContent={<span className="rounded-lg bg-black/60 px-3 py-2 text-sm">{project.judul}</span>}
+                  />
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between text-sm text-gray-300">
+                      <span className="uppercase tracking-wide">{project.category}</span>
+                      <span className="rounded-full bg-white/10 px-3 py-1 text-xs">{project.tech}</span>
                     </div>
-                  }
-                />
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between text-sm text-gray-300">
-                    <span className="uppercase tracking-wide">{proj.category}</span>
-                    <span className="text-xs bg-white/10 rounded-full px-3 py-1">
-                      {proj.tech}
-                    </span>
+                    <h2 className="text-2xl font-semibold">
+                      <a href={project.link} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                        {project.judul}
+                      </a>
+                    </h2>
                   </div>
-                  <a href={proj.link} target="_blank" className="text-2xl font-semibold hover:underline">{proj.judul}</a>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+              </motion.article>
+            ))}
+          </motion.section>
+        ) : (
+          <p className="rounded-2xl border border-white/10 bg-white/5 p-8 text-gray-300">
+            The project feed is temporarily unavailable. You can browse the source work on{" "}
+            <a className="text-violet-300 underline" href="https://github.com/Alif1507" target="_blank" rel="noopener noreferrer">GitHub</a>.
+          </p>
+        )}
       </div>
-    </section>
+    </main>
   );
-};
-
-export default ProjectsPage;
+}

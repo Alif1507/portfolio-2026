@@ -1,7 +1,8 @@
+"use client";
+
 import React, { useCallback } from "react";
-import AuroraBackground from "./AuroraBackground";
+import DarkVeilBackground from "./DarkVeilBackground";
 import { Github, ArrowDown } from "lucide-react";
-import "../styles/hero.css";
 
 const Hero = () => {
   const scrollToAbout = useCallback(() => {
@@ -23,17 +24,17 @@ const Hero = () => {
 
   return (
     <section id="home" className="hero-section" style={{ fontFamily: "Sora Variable" }}>
-      <AuroraBackground />
+      <DarkVeilBackground />
 
       <div className="hero-content">
-        <p className="hero-eyebrow">Hi, I'm</p>
+        <p className="hero-eyebrow">Hi, I&apos;m</p>
 
         <div className="hero-name-mask">
           <h1 className="hero-name">Muhammad Alif Wahyudi</h1>
         </div>
 
         <p className="hero-description">
-          I'm a Web Developer, UI/UX Designer, and Mobile Developer.
+          Full-stack web and mobile developer crafting clear, thoughtful digital experiences.
         </p>
 
         <div className="hero-actions">

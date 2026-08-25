@@ -1,5 +1,8 @@
+"use client";
+
 import { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
+import Image from "next/image";
 
 const springValues = {
   damping: 30,
@@ -99,14 +102,12 @@ export default function TiltedCard({
           scale
         }}
       >
-        <motion.img
+        <Image
           src={imageSrc}
           alt={altText}
-          className="absolute top-0 left-0 object-cover rounded-[15px] will-change-transform [transform:translateZ(0)]"
-          style={{
-            width: imageWidth,
-            height: imageHeight
-          }}
+          fill
+          sizes="(max-width: 640px) 100vw, 50vw"
+          className="object-cover rounded-[15px] will-change-transform [transform:translateZ(0)]"
         />
 
         {displayOverlayContent && overlayContent && (

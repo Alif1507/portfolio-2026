@@ -1,10 +1,12 @@
+"use client";
+
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import React, { useRef } from "react";
 import * as THREE from "three";
 
 const Cube = () => {
   const ref = useRef();
-  const bumiTexture = useLoader(THREE.TextureLoader, "/texture/bumi3.png");
+  const bumiTexture = useLoader(THREE.TextureLoader, "/texture/bumi3.jpg");
 
   useFrame((state, delta) => {
     ref.current.rotation.y += delta * 0.3;
